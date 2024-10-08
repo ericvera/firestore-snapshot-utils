@@ -13,9 +13,9 @@ database.
 
 ## Parameters
 
-| Parameter | Type                |
-| --------- | ------------------- |
-| `changes` | `DBSnapshotChanges` |
+| Parameter | Type                                                      |
+| --------- | --------------------------------------------------------- |
+| `changes` | [`DBSnapshotChanges`](../interfaces/DBSnapshotChanges.md) |
 
 ## Returns
 

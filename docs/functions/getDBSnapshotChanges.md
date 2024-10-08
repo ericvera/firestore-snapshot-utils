@@ -6,7 +6,7 @@
 
 # Function: getDBSnapshotChanges()
 
-> **getDBSnapshotChanges**(`beforeDocs`, `afterDocs`, `maskKeys`): `DBSnapshotChanges`
+> **getDBSnapshotChanges**(`beforeDocs`, `afterDocs`, `maskKeys`): [`DBSnapshotChanges`](../interfaces/DBSnapshotChanges.md)
 
 ## Parameters
 
@@ -18,7 +18,7 @@
 
 ## Returns
 
-`DBSnapshotChanges`
+[`DBSnapshotChanges`](../interfaces/DBSnapshotChanges.md)
 
 ## Defined in
 
