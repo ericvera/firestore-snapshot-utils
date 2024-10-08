@@ -23,4 +23,4 @@ database.
 
 ## Defined in
 
-getDBSnapshotChangesDiff.ts:9
+[getDBSnapshotChangesDiff.ts:9](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/getDBSnapshotChangesDiff.ts#L9)

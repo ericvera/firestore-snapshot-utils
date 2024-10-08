@@ -22,4 +22,4 @@
 
 ## Defined in
 
-getDBSnapshotChanges.ts:16
+[getDBSnapshotChanges.ts:16](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/getDBSnapshotChanges.ts#L16)
