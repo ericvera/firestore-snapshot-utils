@@ -1,8 +1,8 @@
-**i-forgot-to-rename-my-package** • **Docs**
+**firestore-snapshot-utils** • **Docs**
 
 ---
 
-# i-forgot-to-rename-my-package
+# firestore-snapshot-utils
 
 ## Functions
 

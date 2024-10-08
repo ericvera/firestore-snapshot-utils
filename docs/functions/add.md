@@ -1,8 +1,8 @@
-[**i-forgot-to-rename-my-package**](../README.md) • **Docs**
+[**firestore-snapshot-utils**](../README.md) • **Docs**
 
 ---
 
-[i-forgot-to-rename-my-package](../README.md) / add
+[firestore-snapshot-utils](../README.md) / add
 
 # Function: add()
 
@@ -21,4 +21,4 @@
 
 ## Defined in
 
-[index.ts:1](https://github.com/ericvera/ts-lib-template/blob/main/src/index.ts#L1)
+[index.ts:1](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/index.ts#L1)

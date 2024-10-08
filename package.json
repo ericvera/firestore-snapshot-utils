@@ -1,5 +1,5 @@
 {
-  "name": "i-forgot-to-rename-my-package",
+  "name": "firestore-snapshot-utils",
   "version": "0.0.1",
   "type": "module",
   "exports": {
@@ -49,9 +49,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/user/i-forgot-to-rename-my-package"
+    "url": "git+https://github.com/ericvera/firestore-snapshot-utils.git"
   },
-  "keywords": [],
+  "keywords": [
+    "firestore",
+    "snapshot",
+    "utils",
+    "test",
+    "testing",
+    "firebase",
+    "db",
+    "database"
+  ],
   "license": "MIT",
   "lint-staged": {
     "*.{ts,tsx,mjs}": "eslint --cache",
