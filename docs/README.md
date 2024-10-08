@@ -6,4 +6,6 @@
 
 ## Functions
 
-- [add](functions/add.md)
+- [getDBSnapshot](functions/getDBSnapshot.md)
+- [getDBSnapshotChanges](functions/getDBSnapshotChanges.md)
+- [getDiffFromDBSnapshotChanges](functions/getDiffFromDBSnapshotChanges.md)
