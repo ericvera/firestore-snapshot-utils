@@ -37,7 +37,7 @@ export const getDBSnapshotChanges = (
     .forEach((afterDoc) => {
       // Get added docs
       const isAdded = beforeDocs.every(
-        (beforeDoc) => beforeDoc.id !== afterDoc.id,
+        (beforeDoc) => beforeDoc.ref.path !== afterDoc.ref.path,
       )
 
       if (isAdded) {
@@ -60,7 +60,9 @@ export const getDBSnapshotChanges = (
       }
 
       // Get modified and unmodified docs
-      const beforeDoc = beforeDocs.find((doc) => doc.id === afterDoc.id)
+      const beforeDoc = beforeDocs.find(
+        (doc) => doc.ref.path === afterDoc.ref.path,
+      )
 
       if (!beforeDoc) {
         return
@@ -112,7 +114,7 @@ export const getDBSnapshotChanges = (
     .sort(ascCompare((a) => a.updateTime.valueOf()))
     .forEach((beforeDoc) => {
       const isRemoved = afterDocs.every(
-        (afterDoc) => afterDoc.id !== beforeDoc.id,
+        (afterDoc) => afterDoc.ref.path !== beforeDoc.ref.path,
       )
 
       if (isRemoved) {
