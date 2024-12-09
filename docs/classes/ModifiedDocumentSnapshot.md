@@ -1,4 +1,4 @@
-[**firestore-snapshot-utils**](../README.md) • **Docs**
+[**firestore-snapshot-utils**](../README.md)
 
 ---
 

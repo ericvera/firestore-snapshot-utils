@@ -1,4 +1,4 @@
-**firestore-snapshot-utils** • **Docs**
+**firestore-snapshot-utils**
 
 ---
 
