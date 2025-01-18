@@ -8,6 +8,8 @@
 
 > **getDiffFromDBSnapshotChanges**(`changes`): `string`
 
+Defined in: [getDBSnapshotChangesDiff.ts:9](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/getDBSnapshotChangesDiff.ts#L9)
+
 Returns a string with the differences between two snapshots of a Firestore
 database.
 
@@ -20,7 +22,3 @@ database.
 ## Returns
 
 `string`
-
-## Defined in
-
-[getDBSnapshotChangesDiff.ts:9](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/getDBSnapshotChangesDiff.ts#L9)
