@@ -18,11 +18,11 @@ Defined in: [internal/DocumentChangeSnapshot.ts:130](https://github.com/ericvera
 
 #### Parameters
 
-| Parameter               | Type                      |
-| ----------------------- | ------------------------- |
-| `removedDoc`            | `QueryDocumentSnapshot`   |
-| `normalizedRemovedData` | `unknown`                 |
-| `allDocs`               | `QueryDocumentSnapshot`[] |
+| Parameter               | Type                                                        |
+| ----------------------- | ----------------------------------------------------------- |
+| `removedDoc`            | `QueryDocumentSnapshot`                                     |
+| `normalizedRemovedData` | `unknown`                                                   |
+| `allDocs`               | `QueryDocumentSnapshot`\<`DocumentData`, `DocumentData`\>[] |
 
 #### Returns
 

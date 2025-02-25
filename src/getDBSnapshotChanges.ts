@@ -27,7 +27,7 @@ export const getDBSnapshotChanges = (
   }
 
   // Reset meta at the start of processing
-  const meta: NormalizeTimestampsMeta = {
+  let meta: NormalizeTimestampsMeta = {
     timestampsMap: {},
     counter: 0,
   }
@@ -36,7 +36,11 @@ export const getDBSnapshotChanges = (
   const beforeDocsNormalized = beforeDocs
     .sort(ascCompare((a) => a.updateTime.valueOf()))
     .map((doc) => {
-      const { result: normalized } = normalizeTimestamps(doc.data(), meta)
+      const { result: normalized, meta: updatedMeta } = normalizeTimestamps(
+        doc.data(),
+        meta,
+      )
+      meta = updatedMeta // Update meta with the new state
       return { doc, normalizedData: normalized }
     })
 
@@ -44,7 +48,11 @@ export const getDBSnapshotChanges = (
   const afterDocsNormalized = afterDocs
     .sort(ascCompare((a) => a.updateTime.valueOf()))
     .map((doc) => {
-      const { result: normalized } = normalizeTimestamps(doc.data(), meta)
+      const { result: normalized, meta: updatedMeta } = normalizeTimestamps(
+        doc.data(),
+        meta,
+      )
+      meta = updatedMeta // Update meta with the new state
       return { doc, normalizedData: normalized }
     })
 

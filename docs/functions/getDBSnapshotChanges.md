@@ -12,11 +12,11 @@ Defined in: [getDBSnapshotChanges.ts:16](https://github.com/ericvera/firestore-s
 
 ## Parameters
 
-| Parameter    | Type                             |
-| ------------ | -------------------------------- |
-| `beforeDocs` | `QueryDocumentSnapshot`[]        |
-| `afterDocs`  | `QueryDocumentSnapshot`[]        |
-| `maskKeys`   | `Record`\<`string`, `string`[]\> |
+| Parameter    | Type                                                        |
+| ------------ | ----------------------------------------------------------- |
+| `beforeDocs` | `QueryDocumentSnapshot`\<`DocumentData`, `DocumentData`\>[] |
+| `afterDocs`  | `QueryDocumentSnapshot`\<`DocumentData`, `DocumentData`\>[] |
+| `maskKeys`   | `Record`\<`string`, `string`[]\>                            |
 
 ## Returns
 

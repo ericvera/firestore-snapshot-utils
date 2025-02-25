@@ -18,13 +18,13 @@ Defined in: [internal/DocumentChangeSnapshot.ts:160](https://github.com/ericvera
 
 #### Parameters
 
-| Parameter             | Type                      |
-| --------------------- | ------------------------- |
-| `beforeDoc`           | `QueryDocumentSnapshot`   |
-| `afterDoc`            | `QueryDocumentSnapshot`   |
-| `normalizeBeforeData` | `unknown`                 |
-| `normalizeAfterData`  | `unknown`                 |
-| `allDocs`             | `QueryDocumentSnapshot`[] |
+| Parameter             | Type                                                        |
+| --------------------- | ----------------------------------------------------------- |
+| `beforeDoc`           | `QueryDocumentSnapshot`                                     |
+| `afterDoc`            | `QueryDocumentSnapshot`                                     |
+| `normalizeBeforeData` | `unknown`                                                   |
+| `normalizeAfterData`  | `unknown`                                                   |
+| `allDocs`             | `QueryDocumentSnapshot`\<`DocumentData`, `DocumentData`\>[] |
 
 #### Returns
 

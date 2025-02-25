@@ -6,7 +6,7 @@
 
 # Function: getDBSnapshot()
 
-> **getDBSnapshot**(`queries`): `Promise`\<`QueryDocumentSnapshot`[]\>
+> **getDBSnapshot**(`queries`): `Promise`\<`QueryDocumentSnapshot`\<`DocumentData`, `DocumentData`\>[]\>
 
 Defined in: [getDBSnapshot.ts:8](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/getDBSnapshot.ts#L8)
 
@@ -14,10 +14,10 @@ Returns all documents in a flat list from the provided DB queries.
 
 ## Parameters
 
-| Parameter | Type                 | Description                                                                             |
-| --------- | -------------------- | --------------------------------------------------------------------------------------- |
-| `queries` | `Query` \| `Query`[] | The DB queries to get the documents from. Can be a single query or an array of queries. |
+| Parameter | Type                                                                                     | Description                                                                             |
+| --------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `queries` | `Query`\<`DocumentData`, `DocumentData`\> \| `Query`\<`DocumentData`, `DocumentData`\>[] | The DB queries to get the documents from. Can be a single query or an array of queries. |
 
 ## Returns
 
-`Promise`\<`QueryDocumentSnapshot`[]\>
+`Promise`\<`QueryDocumentSnapshot`\<`DocumentData`, `DocumentData`\>[]\>

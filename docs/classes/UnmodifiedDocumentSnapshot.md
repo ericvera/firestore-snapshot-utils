@@ -18,10 +18,10 @@ Defined in: [internal/DocumentChangeSnapshot.ts:191](https://github.com/ericvera
 
 #### Parameters
 
-| Parameter | Type                      |
-| --------- | ------------------------- |
-| `doc`     | `QueryDocumentSnapshot`   |
-| `allDocs` | `QueryDocumentSnapshot`[] |
+| Parameter | Type                                                        |
+| --------- | ----------------------------------------------------------- |
+| `doc`     | `QueryDocumentSnapshot`                                     |
+| `allDocs` | `QueryDocumentSnapshot`\<`DocumentData`, `DocumentData`\>[] |
 
 #### Returns
 
