@@ -26,110 +26,123 @@ export const getDBSnapshotChanges = (
     unmodified: [],
   }
 
-  // Reset meta at the start of processing
+  // Create a new meta object for this specific call
   let meta: NormalizeTimestampsMeta = {
     timestampsMap: {},
     counter: 0,
   }
 
-  // First, normalize all beforeDocs timestamps
-  const beforeDocsNormalized = beforeDocs
-    .sort(ascCompare((a) => a.updateTime.valueOf()))
-    .map((doc) => {
-      const { result: normalized, meta: updatedMeta } = normalizeTimestamps(
-        doc.data(),
-        meta,
-      )
-      meta = updatedMeta // Update meta with the new state
-      return { doc, normalizedData: normalized }
-    })
+  // First, normalize all documents in a deterministic order
+  const allDocs = [...beforeDocs, ...afterDocs].sort(
+    ascCompare((a) => a.createTime.valueOf()),
+  )
 
-  // Then normalize all afterDocs timestamps using the same meta
-  const afterDocsNormalized = afterDocs
-    .sort(ascCompare((a) => a.updateTime.valueOf()))
-    .map((doc) => {
-      const { result: normalized, meta: updatedMeta } = normalizeTimestamps(
-        doc.data(),
-        meta,
-      )
-      meta = updatedMeta // Update meta with the new state
-      return { doc, normalizedData: normalized }
-    })
+  const normalizedDocsMap = new Map<
+    string,
+    { doc: QueryDocumentSnapshot; normalizedData: unknown }
+  >()
+
+  // Normalize all documents once, in a single pass
+  allDocs.forEach((doc) => {
+    const { result: normalized, meta: updatedMeta } = normalizeTimestamps(
+      doc.data(),
+      meta,
+    )
+    meta = updatedMeta
+    normalizedDocsMap.set(doc.ref.path, { doc, normalizedData: normalized })
+  })
 
   // Process added and modified docs
-  afterDocsNormalized.forEach(
-    ({ doc: afterDoc, normalizedData: afterNormalizedData }) => {
-      const afterMaskedData = maskProps(
-        afterNormalizedData,
-        afterDoc.ref.parent.id,
-        maskKeys,
-      )
+  afterDocs.forEach((afterDoc) => {
+    const afterNormalizedData = normalizedDocsMap.get(
+      afterDoc.ref.path,
+    )?.normalizedData
+    if (!afterNormalizedData) return
 
-      // Get added docs
-      const isAdded = beforeDocs.every(
-        (beforeDoc) => beforeDoc.ref.path !== afterDoc.ref.path,
-      )
+    const afterMaskedData = maskProps(
+      afterNormalizedData,
+      afterDoc.ref.parent.id,
+      maskKeys,
+    )
 
-      if (isAdded) {
-        result.added.push(
-          new AddedDocumentSnapshot(afterDoc, afterMaskedData, afterDocs),
-        )
+    // Get added docs
+    const isAdded = beforeDocs.every(
+      (beforeDoc) => beforeDoc.ref.path !== afterDoc.ref.path,
+    )
+
+    if (isAdded) {
+      result.added.push(
+        new AddedDocumentSnapshot(afterDoc, afterMaskedData, afterDocs),
+      )
+      return
+    }
+
+    // Get modified and unmodified docs
+    const beforeDoc = beforeDocs.find(
+      (doc) => doc.ref.path === afterDoc.ref.path,
+    )
+
+    if (!beforeDoc) {
+      return
+    }
+
+    const beforeNormalizedData = normalizedDocsMap.get(
+      beforeDoc.ref.path,
+    )?.normalizedData
+
+    if (!beforeNormalizedData) {
+      return
+    }
+
+    const beforeMaskedData = maskProps(
+      beforeNormalizedData,
+      beforeDoc.ref.parent.id,
+      maskKeys,
+    )
+
+    if (!beforeDoc.updateTime.isEqual(afterDoc.updateTime)) {
+      result.modified.push(
+        new ModifiedDocumentSnapshot(
+          beforeDoc,
+          afterDoc,
+          beforeMaskedData,
+          afterMaskedData,
+          afterDocs,
+        ),
+      )
+    } else {
+      result.unmodified.push(
+        new UnmodifiedDocumentSnapshot(beforeDoc, afterDocs),
+      )
+    }
+  })
+
+  // Process removed docs
+  beforeDocs.forEach((beforeDoc) => {
+    const isRemoved = afterDocs.every(
+      (afterDoc) => afterDoc.ref.path !== beforeDoc.ref.path,
+    )
+
+    if (isRemoved) {
+      const beforeNormalizedData = normalizedDocsMap.get(
+        beforeDoc.ref.path,
+      )?.normalizedData
+
+      if (!beforeNormalizedData) {
         return
       }
 
-      // Get modified and unmodified docs
-      const beforeDocData = beforeDocsNormalized.find(
-        ({ doc }) => doc.ref.path === afterDoc.ref.path,
-      )
-
-      if (!beforeDocData) return
-
-      const { doc: beforeDoc, normalizedData: beforeNormalizedData } =
-        beforeDocData
       const beforeMaskedData = maskProps(
         beforeNormalizedData,
         beforeDoc.ref.parent.id,
         maskKeys,
       )
 
-      if (!beforeDoc.updateTime.isEqual(afterDoc.updateTime)) {
-        result.modified.push(
-          new ModifiedDocumentSnapshot(
-            beforeDoc,
-            afterDoc,
-            beforeMaskedData,
-            afterMaskedData,
-            afterDocs,
-          ),
-        )
-      } else {
-        result.unmodified.push(
-          new UnmodifiedDocumentSnapshot(beforeDoc, afterDocs),
-        )
-      }
-    },
-  )
-
-  // Process removed docs
-  beforeDocsNormalized.forEach(
-    ({ doc: beforeDoc, normalizedData: beforeNormalizedData }) => {
-      const isRemoved = afterDocs.every(
-        (afterDoc) => afterDoc.ref.path !== beforeDoc.ref.path,
+      result.removed.push(
+        new RemovedDocumentSnapshot(beforeDoc, beforeMaskedData, beforeDocs),
       )
-
-      if (isRemoved) {
-        const beforeMaskedData = maskProps(
-          beforeNormalizedData,
-          beforeDoc.ref.parent.id,
-          maskKeys,
-        )
-
-        result.removed.push(
-          new RemovedDocumentSnapshot(beforeDoc, beforeMaskedData, beforeDocs),
-        )
-      }
-    },
-  )
+    }
+  })
 
   return result
 }
