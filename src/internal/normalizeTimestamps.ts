@@ -19,14 +19,10 @@ export const normalizeTimestamps = (
   meta?: NormalizeTimestampsMeta,
 ): NormalizeTimestampsResult => {
   let localCounter = meta?.counter ?? 0
-  let localTimestampsMap = Object.assign(meta?.timestampsMap ?? {}) as Record<
-    string,
-    number | undefined
-  >
+  let localTimestampsMap = meta?.timestampsMap ?? {}
 
   if (a instanceof Timestamp) {
-    const aTimestamp = a
-    const timeValue = aTimestamp.valueOf()
+    const timeValue = a.valueOf()
     let normalizedValue = localTimestampsMap[timeValue]
 
     if (normalizedValue === undefined) {
@@ -47,17 +43,21 @@ export const normalizeTimestamps = (
     const aNormalized: Record<string, unknown> = {}
     const obj = a as Record<string, unknown>
 
+    // Use the same meta object for all recursive calls
+    const currentMeta = {
+      counter: localCounter,
+      timestampsMap: localTimestampsMap,
+    }
+
     for (const key in obj) {
-      const { result, meta } = normalizeTimestamps(
+      const { result, meta: updatedMeta } = normalizeTimestamps(
         obj[key] as Readonly<unknown>,
-        {
-          counter: localCounter,
-          timestampsMap: localTimestampsMap,
-        },
+        currentMeta,
       )
 
-      localCounter = meta.counter
-      localTimestampsMap = meta.timestampsMap
+      // Update our tracking variables with the latest state
+      localCounter = updatedMeta.counter
+      localTimestampsMap = updatedMeta.timestampsMap
 
       aNormalized[key] = result
     }
