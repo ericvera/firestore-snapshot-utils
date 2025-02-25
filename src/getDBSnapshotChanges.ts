@@ -26,78 +26,71 @@ export const getDBSnapshotChanges = (
     unmodified: [],
   }
 
-  let currentMeta: NormalizeTimestampsMeta = {
+  // Reset meta at the start of processing
+  const meta: NormalizeTimestampsMeta = {
     timestampsMap: {},
     counter: 0,
   }
 
-  afterDocs
-    // Sort to keep the order consistent across runs
+  // First, normalize all beforeDocs timestamps
+  const beforeDocsNormalized = beforeDocs
     .sort(ascCompare((a) => a.updateTime.valueOf()))
-    .forEach((afterDoc) => {
+    .map((doc) => {
+      const { result: normalized } = normalizeTimestamps(doc.data(), meta)
+      return { doc, normalizedData: normalized }
+    })
+
+  // Then normalize all afterDocs timestamps using the same meta
+  const afterDocsNormalized = afterDocs
+    .sort(ascCompare((a) => a.updateTime.valueOf()))
+    .map((doc) => {
+      const { result: normalized } = normalizeTimestamps(doc.data(), meta)
+      return { doc, normalizedData: normalized }
+    })
+
+  // Process added and modified docs
+  afterDocsNormalized.forEach(
+    ({ doc: afterDoc, normalizedData: afterNormalizedData }) => {
+      const afterMaskedData = maskProps(
+        afterNormalizedData,
+        afterDoc.ref.parent.id,
+        maskKeys,
+      )
+
       // Get added docs
       const isAdded = beforeDocs.every(
         (beforeDoc) => beforeDoc.ref.path !== afterDoc.ref.path,
       )
 
       if (isAdded) {
-        const { result: afterDocNormalized, meta } = normalizeTimestamps(
-          afterDoc.data(),
-          currentMeta,
-        )
-        currentMeta = meta
-
-        const normalizedData = maskProps(
-          afterDocNormalized,
-          afterDoc.ref.parent.id,
-          maskKeys,
-        )
-
         result.added.push(
-          new AddedDocumentSnapshot(afterDoc, normalizedData, afterDocs),
+          new AddedDocumentSnapshot(afterDoc, afterMaskedData, afterDocs),
         )
         return
       }
 
       // Get modified and unmodified docs
-      const beforeDoc = beforeDocs.find(
-        (doc) => doc.ref.path === afterDoc.ref.path,
+      const beforeDocData = beforeDocsNormalized.find(
+        ({ doc }) => doc.ref.path === afterDoc.ref.path,
       )
 
-      if (!beforeDoc) {
-        return
-      }
+      if (!beforeDocData) return
 
-      const { result: beforeDocNormalized, meta: metaBefore } =
-        normalizeTimestamps(beforeDoc.data(), currentMeta)
-
-      currentMeta = metaBefore
-
-      const beforeNormalizedData = maskProps(
-        beforeDocNormalized,
+      const { doc: beforeDoc, normalizedData: beforeNormalizedData } =
+        beforeDocData
+      const beforeMaskedData = maskProps(
+        beforeNormalizedData,
         beforeDoc.ref.parent.id,
         maskKeys,
       )
 
       if (!beforeDoc.updateTime.isEqual(afterDoc.updateTime)) {
-        // Only needed if modified
-        const { result: afterDocNormalized, meta: metaAfter } =
-          normalizeTimestamps(afterDoc.data(), currentMeta)
-
-        currentMeta = metaAfter
-
-        const afterNormalizedData = maskProps(
-          afterDocNormalized,
-          afterDoc.ref.parent.id,
-          maskKeys,
-        )
-
         result.modified.push(
           new ModifiedDocumentSnapshot(
             beforeDoc,
             afterDoc,
-            beforeNormalizedData,
-            afterNormalizedData,
+            beforeMaskedData,
+            afterMaskedData,
             afterDocs,
           ),
         )
@@ -106,36 +99,29 @@ export const getDBSnapshotChanges = (
           new UnmodifiedDocumentSnapshot(beforeDoc, afterDocs),
         )
       }
-    })
+    },
+  )
 
-  // Get removed docs
-  beforeDocs
-    // Sort to keep the order consistent across runs
-    .sort(ascCompare((a) => a.updateTime.valueOf()))
-    .forEach((beforeDoc) => {
+  // Process removed docs
+  beforeDocsNormalized.forEach(
+    ({ doc: beforeDoc, normalizedData: beforeNormalizedData }) => {
       const isRemoved = afterDocs.every(
         (afterDoc) => afterDoc.ref.path !== beforeDoc.ref.path,
       )
 
       if (isRemoved) {
-        const { result: beforeDocNormalized, meta } = normalizeTimestamps(
-          beforeDoc.data(),
-          currentMeta,
-        )
-
-        currentMeta = meta
-
-        const normalizedData = maskProps(
-          beforeDocNormalized,
+        const beforeMaskedData = maskProps(
+          beforeNormalizedData,
           beforeDoc.ref.parent.id,
           maskKeys,
         )
 
         result.removed.push(
-          new RemovedDocumentSnapshot(beforeDoc, normalizedData, beforeDocs),
+          new RemovedDocumentSnapshot(beforeDoc, beforeMaskedData, beforeDocs),
         )
       }
-    })
+    },
+  )
 
   return result
 }
