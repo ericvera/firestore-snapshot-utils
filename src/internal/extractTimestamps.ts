@@ -35,7 +35,7 @@ export const extractTimestamps = (
           ? `in document ${debugOptions.docPath}`
           : ''
         console.log(
-          `Found timestamp ${val.toDate().toISOString()} at path: ${currentPath} ${docPathInfo}`,
+          `Found timestamp ${val.valueOf()} (${val.toDate().toISOString()}) at path: ${currentPath} ${docPathInfo}`,
         )
       }
 

@@ -62,6 +62,18 @@ export const getDBSnapshotChanges = (
   // Step 2: Sort timestamps chronologically
   const sortedTimestamps = Array.from(timestampValues).sort()
 
+  // Log sorted timestamps if debug is enabled
+  if (debugOptions.logTimestamps && sortedTimestamps.length > 0) {
+    console.log('\nSorted timestamps (chronological order):')
+
+    sortedTimestamps.forEach((timestamp, index) => {
+      // Convert timestamp string back to date for readable output
+      console.log(`  ${index.toString().padStart(3, '0')}: ${timestamp}`)
+    })
+
+    console.log('')
+  }
+
   // Step 3: Normalize all documents by replacing timestamps
   const beforeDocsNormalized = beforeDocs
     .sort(ascCompare((a) => a.updateTime.valueOf()))
