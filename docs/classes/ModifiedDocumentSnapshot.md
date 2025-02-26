@@ -6,7 +6,11 @@
 
 # Class: ModifiedDocumentSnapshot
 
-Defined in: [internal/DocumentChangeSnapshot.ts:151](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L151)
+Defined in: [internal/DocumentChangeSnapshot.ts:161](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L161)
+
+## Extends
+
+- `BaseDocumentSnapshot`
 
 ## Constructors
 
@@ -14,7 +18,7 @@ Defined in: [internal/DocumentChangeSnapshot.ts:151](https://github.com/ericvera
 
 > **new ModifiedDocumentSnapshot**(`beforeDoc`, `afterDoc`, `normalizeBeforeData`, `normalizeAfterData`, `allDocs`): [`ModifiedDocumentSnapshot`](ModifiedDocumentSnapshot.md)
 
-Defined in: [internal/DocumentChangeSnapshot.ts:160](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L160)
+Defined in: [internal/DocumentChangeSnapshot.ts:168](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L168)
 
 #### Parameters
 
@@ -30,13 +34,17 @@ Defined in: [internal/DocumentChangeSnapshot.ts:160](https://github.com/ericvera
 
 [`ModifiedDocumentSnapshot`](ModifiedDocumentSnapshot.md)
 
+#### Overrides
+
+`BaseDocumentSnapshot.constructor`
+
 ## Properties
 
 ### afterDoc
 
 > `readonly` **afterDoc**: `QueryDocumentSnapshot`
 
-Defined in: [internal/DocumentChangeSnapshot.ts:153](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L153)
+Defined in: [internal/DocumentChangeSnapshot.ts:163](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L163)
 
 ---
 
@@ -44,7 +52,31 @@ Defined in: [internal/DocumentChangeSnapshot.ts:153](https://github.com/ericvera
 
 > `readonly` **beforeDoc**: `QueryDocumentSnapshot`
 
-Defined in: [internal/DocumentChangeSnapshot.ts:152](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L152)
+Defined in: [internal/DocumentChangeSnapshot.ts:162](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L162)
+
+---
+
+### doc
+
+> `protected` `readonly` **doc**: `QueryDocumentSnapshot`
+
+Defined in: [internal/DocumentChangeSnapshot.ts:104](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L104)
+
+#### Inherited from
+
+`BaseDocumentSnapshot.doc`
+
+---
+
+### normalizedData?
+
+> `protected` `readonly` `optional` **normalizedData**: `unknown`
+
+Defined in: [internal/DocumentChangeSnapshot.ts:106](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L106)
+
+#### Inherited from
+
+`BaseDocumentSnapshot.normalizedData`
 
 ---
 
@@ -52,7 +84,11 @@ Defined in: [internal/DocumentChangeSnapshot.ts:152](https://github.com/ericvera
 
 > `readonly` **normalizedPath**: `string`
 
-Defined in: [internal/DocumentChangeSnapshot.ts:155](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L155)
+Defined in: [internal/DocumentChangeSnapshot.ts:101](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L101)
+
+#### Inherited from
+
+`BaseDocumentSnapshot.normalizedPath`
 
 ## Methods
 
@@ -60,7 +96,7 @@ Defined in: [internal/DocumentChangeSnapshot.ts:155](https://github.com/ericvera
 
 > **getDiff**(): `undefined` \| `string`
 
-Defined in: [internal/DocumentChangeSnapshot.ts:181](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L181)
+Defined in: [internal/DocumentChangeSnapshot.ts:188](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L188)
 
 Returns a string with the differences between two objects or undefined if
 there are no differences.
@@ -69,3 +105,7 @@ Timestamps are normalized to a string representation before comparison.
 #### Returns
 
 `undefined` \| `string`
+
+#### Overrides
+
+`BaseDocumentSnapshot.getDiff`

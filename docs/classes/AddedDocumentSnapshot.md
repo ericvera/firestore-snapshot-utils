@@ -6,7 +6,11 @@
 
 # Class: AddedDocumentSnapshot
 
-Defined in: [internal/DocumentChangeSnapshot.ts:95](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L95)
+Defined in: [internal/DocumentChangeSnapshot.ts:114](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L114)
+
+## Extends
+
+- `BaseDocumentSnapshot`
 
 ## Constructors
 
@@ -14,7 +18,7 @@ Defined in: [internal/DocumentChangeSnapshot.ts:95](https://github.com/ericvera/
 
 > **new AddedDocumentSnapshot**(`addedDoc`, `normalizedAddedData`, `allDocs`): [`AddedDocumentSnapshot`](AddedDocumentSnapshot.md)
 
-Defined in: [internal/DocumentChangeSnapshot.ts:102](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L102)
+Defined in: [internal/DocumentChangeSnapshot.ts:119](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L119)
 
 #### Parameters
 
@@ -28,13 +32,41 @@ Defined in: [internal/DocumentChangeSnapshot.ts:102](https://github.com/ericvera
 
 [`AddedDocumentSnapshot`](AddedDocumentSnapshot.md)
 
+#### Overrides
+
+`BaseDocumentSnapshot.constructor`
+
 ## Properties
 
 ### addedDoc
 
 > `readonly` **addedDoc**: `QueryDocumentSnapshot`
 
-Defined in: [internal/DocumentChangeSnapshot.ts:96](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L96)
+Defined in: [internal/DocumentChangeSnapshot.ts:115](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L115)
+
+---
+
+### doc
+
+> `protected` `readonly` **doc**: `QueryDocumentSnapshot`
+
+Defined in: [internal/DocumentChangeSnapshot.ts:104](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L104)
+
+#### Inherited from
+
+`BaseDocumentSnapshot.doc`
+
+---
+
+### normalizedData?
+
+> `protected` `readonly` `optional` **normalizedData**: `unknown`
+
+Defined in: [internal/DocumentChangeSnapshot.ts:106](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L106)
+
+#### Inherited from
+
+`BaseDocumentSnapshot.normalizedData`
 
 ---
 
@@ -42,7 +74,11 @@ Defined in: [internal/DocumentChangeSnapshot.ts:96](https://github.com/ericvera/
 
 > `readonly` **normalizedPath**: `string`
 
-Defined in: [internal/DocumentChangeSnapshot.ts:100](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L100)
+Defined in: [internal/DocumentChangeSnapshot.ts:101](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L101)
+
+#### Inherited from
+
+`BaseDocumentSnapshot.normalizedPath`
 
 ## Methods
 
@@ -50,7 +86,7 @@ Defined in: [internal/DocumentChangeSnapshot.ts:100](https://github.com/ericvera
 
 > **getDiff**(): `undefined` \| `string`
 
-Defined in: [internal/DocumentChangeSnapshot.ts:118](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L118)
+Defined in: [internal/DocumentChangeSnapshot.ts:134](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L134)
 
 Returns a string with the differences between two objects or undefined if
 there are no differences.
@@ -59,3 +95,7 @@ Timestamps are normalized to a string representation before comparison.
 #### Returns
 
 `undefined` \| `string`
+
+#### Overrides
+
+`BaseDocumentSnapshot.getDiff`

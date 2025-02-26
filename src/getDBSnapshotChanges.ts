@@ -7,11 +7,9 @@ import {
   RemovedDocumentSnapshot,
   UnmodifiedDocumentSnapshot,
 } from './internal/DocumentChangeSnapshot.js'
+import { extractTimestamps } from './internal/extractTimestamps.js'
 import { maskProps } from './internal/maskProps.js'
-import {
-  normalizeTimestamps,
-  type NormalizeTimestampsMeta,
-} from './internal/normalizeTimestamps.js'
+import { replaceTimestamps } from './internal/replaceTimestamps.js'
 
 export const getDBSnapshotChanges = (
   beforeDocs: QueryDocumentSnapshot[],
@@ -26,34 +24,39 @@ export const getDBSnapshotChanges = (
     unmodified: [],
   }
 
-  // Reset meta at the start of processing
-  let meta: NormalizeTimestampsMeta = {
-    timestampsMap: {},
-    counter: 0,
-  }
+  // Step 1: Extract all unique timestamps from all documents
+  let timestampValues = new Set<string>()
 
-  // First, normalize all beforeDocs timestamps
+  // Collect timestamps from beforeDocs
+  beforeDocs.forEach((doc) => {
+    // Merge the extracted timestamps into our set
+    const docTimestamps = extractTimestamps(doc.data())
+    timestampValues = new Set([...timestampValues, ...docTimestamps])
+  })
+
+  // Collect timestamps from afterDocs
+  afterDocs.forEach((doc) => {
+    // Merge the extracted timestamps into our set
+    const docTimestamps = extractTimestamps(doc.data())
+    timestampValues = new Set([...timestampValues, ...docTimestamps])
+  })
+
+  // Step 2: Sort timestamps chronologically
+  const sortedTimestamps = Array.from(timestampValues).sort()
+
+  // Step 3: Normalize all documents by replacing timestamps
   const beforeDocsNormalized = beforeDocs
     .sort(ascCompare((a) => a.updateTime.valueOf()))
     .map((doc) => {
-      const { result: normalized, meta: updatedMeta } = normalizeTimestamps(
-        doc.data(),
-        meta,
-      )
-      meta = updatedMeta // Update meta with the new state
-      return { doc, normalizedData: normalized }
+      const normalizedData = replaceTimestamps(doc.data(), sortedTimestamps)
+      return { doc, normalizedData }
     })
 
-  // Then normalize all afterDocs timestamps using the same meta
   const afterDocsNormalized = afterDocs
     .sort(ascCompare((a) => a.updateTime.valueOf()))
     .map((doc) => {
-      const { result: normalized, meta: updatedMeta } = normalizeTimestamps(
-        doc.data(),
-        meta,
-      )
-      meta = updatedMeta // Update meta with the new state
-      return { doc, normalizedData: normalized }
+      const normalizedData = replaceTimestamps(doc.data(), sortedTimestamps)
+      return { doc, normalizedData }
     })
 
   // Process added and modified docs

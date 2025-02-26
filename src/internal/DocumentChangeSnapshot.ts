@@ -1,7 +1,8 @@
 import type { QueryDocumentSnapshot } from 'firebase-admin/firestore'
 import { diff } from 'jest-diff'
 import { createHash } from 'node:crypto'
-import { normalizeTimestamps } from './normalizeTimestamps.js'
+import { extractTimestamps } from './extractTimestamps.js'
+import { replaceTimestamps } from './replaceTimestamps.js'
 
 export interface DBSnapshotChanges {
   added: AddedDocumentSnapshot[]
@@ -31,6 +32,14 @@ const getDiff = (a: unknown, b: unknown): string | undefined => {
   return text?.toString()
 }
 
+const generateHash = (data: unknown): string => {
+  const hashData = JSON.stringify(data)
+  return createHash('md5')
+    .update(hashData)
+    .digest('base64')
+    .replaceAll(/[/\\+=]/g, 'a')
+}
+
 /**
  * Creates a normalized ID for a document path based on the content of the
  * document whose path is received (e.g. parent path for a subcCollection item).
@@ -51,14 +60,15 @@ const getNormalizedIDForPath = (
   // and not across all documents. So if there is a single timestamp it will
   // just be normalized to /Timestamp 0000/ rather than a timestamp matching
   // across the snapshot.
-  const hashData = JSON.stringify(normalizeTimestamps(currentData).result)
 
-  const hash = createHash('md5')
-    .update(hashData)
-    .digest('base64')
-    .replaceAll(/[/\\+=]/g, 'a')
+  // Extract and sort timestamps from this document
+  const timestampValues = extractTimestamps(currentData)
+  const sortedTimestamps = Array.from(timestampValues).sort()
 
-  return hash
+  // Replace timestamps with normalized values
+  const normalizedData = replaceTimestamps(currentData, sortedTimestamps)
+
+  return generateHash(normalizedData)
 }
 
 /**
@@ -71,43 +81,49 @@ const getDocPath = (
 ): string => {
   const pathSegments = doc.ref.path.split('/')
 
-  if (pathSegments.length > 4) {
-    throw new Error(
-      'Path segments longer than 4 not supported yet. Need to implement it.',
-    )
-  }
-
+  // Handle subcollections (length 4)
   if (pathSegments.length === 4) {
+    // Since we've checked length is 4, we know these elements exist
     const parentPath = pathSegments.slice(0, 2).join('/')
-
-    const normalizedID = getNormalizedIDForPath(parentPath, allDocs)
-
-    pathSegments[1] = normalizedID
+    pathSegments[1] = getNormalizedIDForPath(parentPath, allDocs)
+  } else if (pathSegments.length > 4) {
+    throw new Error('Path segments longer than 4 not supported yet.')
   }
 
+  // Always replace the last segment with [ID]
   pathSegments[pathSegments.length - 1] = '[ID]'
 
-  const normalizedPath = pathSegments.join('/')
-
-  return normalizedPath
+  return pathSegments.join('/')
 }
 
-export class AddedDocumentSnapshot {
+// Proposed base class
+abstract class BaseDocumentSnapshot {
+  public readonly normalizedPath: string
+
+  constructor(
+    protected readonly doc: QueryDocumentSnapshot,
+    allDocs: QueryDocumentSnapshot[],
+    protected readonly normalizedData?: unknown,
+  ) {
+    this.normalizedPath = getDocPath(doc, allDocs)
+  }
+
+  abstract getDiff(): string | undefined
+}
+
+export class AddedDocumentSnapshot extends BaseDocumentSnapshot {
   public readonly addedDoc: QueryDocumentSnapshot
 
   private normalizedAddedData: unknown
-
-  public readonly normalizedPath: string
 
   constructor(
     addedDoc: QueryDocumentSnapshot,
     normalizedAddedData: unknown,
     allDocs: QueryDocumentSnapshot[],
   ) {
+    super(addedDoc, allDocs, normalizedAddedData)
     this.addedDoc = addedDoc
     this.normalizedAddedData = normalizedAddedData
-
-    this.normalizedPath = getDocPath(addedDoc, allDocs)
   }
 
   /**
@@ -120,22 +136,16 @@ export class AddedDocumentSnapshot {
   }
 }
 
-export class RemovedDocumentSnapshot {
-  public readonly removedDoc: QueryDocumentSnapshot
-
+export class RemovedDocumentSnapshot extends BaseDocumentSnapshot {
   private normalizedRemovedData: unknown
-
-  public readonly normalizedPath: string
 
   constructor(
     removedDoc: QueryDocumentSnapshot,
     normalizedRemovedData: unknown,
     allDocs: QueryDocumentSnapshot[],
   ) {
-    this.removedDoc = removedDoc
+    super(removedDoc, allDocs, normalizedRemovedData)
     this.normalizedRemovedData = normalizedRemovedData
-
-    this.normalizedPath = getDocPath(removedDoc, allDocs)
   }
 
   /**
@@ -148,11 +158,9 @@ export class RemovedDocumentSnapshot {
   }
 }
 
-export class ModifiedDocumentSnapshot {
+export class ModifiedDocumentSnapshot extends BaseDocumentSnapshot {
   public readonly beforeDoc: QueryDocumentSnapshot
   public readonly afterDoc: QueryDocumentSnapshot
-
-  public readonly normalizedPath: string
 
   private normalizedBeforeData: unknown
   private normalizedAfterData: unknown
@@ -164,13 +172,12 @@ export class ModifiedDocumentSnapshot {
     normalizeAfterData: unknown,
     allDocs: QueryDocumentSnapshot[],
   ) {
+    super(afterDoc, allDocs, normalizeAfterData)
     this.beforeDoc = beforeDoc
     this.afterDoc = afterDoc
 
     this.normalizedBeforeData = normalizeBeforeData
     this.normalizedAfterData = normalizeAfterData
-
-    this.normalizedPath = getDocPath(afterDoc, allDocs)
   }
 
   /**
@@ -183,17 +190,7 @@ export class ModifiedDocumentSnapshot {
   }
 }
 
-export class UnmodifiedDocumentSnapshot {
-  public readonly doc: QueryDocumentSnapshot
-
-  public readonly normalizedPath: string
-
-  constructor(doc: QueryDocumentSnapshot, allDocs: QueryDocumentSnapshot[]) {
-    this.doc = doc
-
-    this.normalizedPath = getDocPath(doc, allDocs)
-  }
-
+export class UnmodifiedDocumentSnapshot extends BaseDocumentSnapshot {
   /**
    * Returns a string with the differences between two objects or undefined if
    * there are no differences.

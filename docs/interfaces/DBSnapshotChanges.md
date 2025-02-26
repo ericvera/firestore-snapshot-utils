@@ -6,7 +6,7 @@
 
 # Interface: DBSnapshotChanges
 
-Defined in: [internal/DocumentChangeSnapshot.ts:6](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L6)
+Defined in: [internal/DocumentChangeSnapshot.ts:7](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L7)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [internal/DocumentChangeSnapshot.ts:6](https://github.com/ericvera/f
 
 > **added**: [`AddedDocumentSnapshot`](../classes/AddedDocumentSnapshot.md)[]
 
-Defined in: [internal/DocumentChangeSnapshot.ts:7](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L7)
+Defined in: [internal/DocumentChangeSnapshot.ts:8](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L8)
 
 ---
 
@@ -22,7 +22,7 @@ Defined in: [internal/DocumentChangeSnapshot.ts:7](https://github.com/ericvera/f
 
 > **modified**: [`ModifiedDocumentSnapshot`](../classes/ModifiedDocumentSnapshot.md)[]
 
-Defined in: [internal/DocumentChangeSnapshot.ts:9](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L9)
+Defined in: [internal/DocumentChangeSnapshot.ts:10](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L10)
 
 ---
 
@@ -30,7 +30,7 @@ Defined in: [internal/DocumentChangeSnapshot.ts:9](https://github.com/ericvera/f
 
 > **removed**: [`RemovedDocumentSnapshot`](../classes/RemovedDocumentSnapshot.md)[]
 
-Defined in: [internal/DocumentChangeSnapshot.ts:8](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L8)
+Defined in: [internal/DocumentChangeSnapshot.ts:9](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L9)
 
 ---
 
@@ -38,4 +38,4 @@ Defined in: [internal/DocumentChangeSnapshot.ts:8](https://github.com/ericvera/f
 
 > **unmodified**: [`UnmodifiedDocumentSnapshot`](../classes/UnmodifiedDocumentSnapshot.md)[]
 
-Defined in: [internal/DocumentChangeSnapshot.ts:10](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L10)
+Defined in: [internal/DocumentChangeSnapshot.ts:11](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L11)
