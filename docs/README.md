@@ -14,6 +14,7 @@
 ## Interfaces
 
 - [DBSnapshotChanges](interfaces/DBSnapshotChanges.md)
+- [DebugOptions](interfaces/DebugOptions.md)
 
 ## Functions
 

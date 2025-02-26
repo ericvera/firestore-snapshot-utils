@@ -7,15 +7,23 @@ import {
   RemovedDocumentSnapshot,
   UnmodifiedDocumentSnapshot,
 } from './internal/DocumentChangeSnapshot.js'
-import { extractTimestamps } from './internal/extractTimestamps.js'
+import {
+  extractTimestamps,
+  TimestampDebugOptions,
+} from './internal/extractTimestamps.js'
 import { maskProps } from './internal/maskProps.js'
 import { replaceTimestamps } from './internal/replaceTimestamps.js'
+
+export interface DebugOptions {
+  logTimestamps?: boolean
+}
 
 export const getDBSnapshotChanges = (
   beforeDocs: QueryDocumentSnapshot[],
   afterDocs: QueryDocumentSnapshot[],
   // Object with key as a collection name and value as an array of keys to mask
   maskKeys: Record<string, string[]> = {},
+  debugOptions: DebugOptions = {},
 ): DBSnapshotChanges => {
   const result: DBSnapshotChanges = {
     added: [],
@@ -30,14 +38,24 @@ export const getDBSnapshotChanges = (
   // Collect timestamps from beforeDocs
   beforeDocs.forEach((doc) => {
     // Merge the extracted timestamps into our set
-    const docTimestamps = extractTimestamps(doc.data())
+    const timestampDebugOptions: TimestampDebugOptions = {
+      logTimestamps: debugOptions.logTimestamps ?? false,
+      docPath: doc.ref.path,
+    }
+
+    const docTimestamps = extractTimestamps(doc.data(), timestampDebugOptions)
     timestampValues = new Set([...timestampValues, ...docTimestamps])
   })
 
   // Collect timestamps from afterDocs
   afterDocs.forEach((doc) => {
     // Merge the extracted timestamps into our set
-    const docTimestamps = extractTimestamps(doc.data())
+    const timestampDebugOptions: TimestampDebugOptions = {
+      logTimestamps: debugOptions.logTimestamps ?? false,
+      docPath: doc.ref.path,
+    }
+
+    const docTimestamps = extractTimestamps(doc.data(), timestampDebugOptions)
     timestampValues = new Set([...timestampValues, ...docTimestamps])
   })
 
