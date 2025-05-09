@@ -3,16 +3,18 @@
 [![github license](https://img.shields.io/github/license/ericvera/firestore-snapshot-utils.svg?style=flat-square)](https://github.com/ericvera/firestore-snapshot-utils/blob/master/LICENSE)
 [![npm version](https://img.shields.io/npm/v/firestore-snapshot-utils.svg?style=flat-square)](https://npmjs.org/package/firestore-snapshot-utils)
 
+**A lightweight utility for testing Firestore database snapshots with precision.**
+
 Testing Firestore database changes shouldn't be painful. This lightweight utility makes it simple to track and verify Firestore collection changes in your tests.
 
 ## ✨ Features
 
-- **Snapshot Retrieval** - Get snapshots from Firestore queries
-- **Change Detection** - Track document additions, removals, and modifications
-- **Timestamp Normalization** - Compare timestamps reliably across test runs
-- **Property Masking** - Ignore sensitive or variable properties in comparisons
-- **Human-readable Diffs** - See exactly what changed in your database
-- **TypeScript Support** - Fully typed API with strict type checking
+- 🔍 **Snapshot Retrieval** - Get snapshots from Firestore queries
+- 🔄 **Change Detection** - Track document additions, removals, and modifications
+- ⏱️ **Timestamp Normalization** - Compare timestamps reliably across test runs
+- 🔒 **Property Masking** - Ignore sensitive or variable properties in comparisons
+- 📊 **Human-readable Diffs** - See exactly what changed in your database
+- 📘 **TypeScript Support** - Fully typed API with strict type checking
 
 ## 📦 Installation
 
@@ -156,6 +158,10 @@ describe('User profile update', () => {
 
 - Timestamps are automatically normalized for consistent comparisons
 - Buffer objects are converted to base64url strings for reliable diff generation
+
+## 🤝 AI Disclosure
+
+This library's documentation has been enhanced with AI assistance. All code and functionality has been carefully designed and tested by humans.
 
 ## 📄 License
 
