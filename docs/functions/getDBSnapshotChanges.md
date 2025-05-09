@@ -8,7 +8,7 @@
 
 > **getDBSnapshotChanges**(`beforeDocs`, `afterDocs`, `maskKeys`, `debugOptions`): [`DBSnapshotChanges`](../interfaces/DBSnapshotChanges.md)
 
-Defined in: [getDBSnapshotChanges.ts:21](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/getDBSnapshotChanges.ts#L21)
+Defined in: [getDBSnapshotChanges.ts:22](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/getDBSnapshotChanges.ts#L22)
 
 ## Parameters
 

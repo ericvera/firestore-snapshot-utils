@@ -6,7 +6,7 @@
 
 # Class: UnmodifiedDocumentSnapshot
 
-Defined in: [internal/DocumentChangeSnapshot.ts:193](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L193)
+Defined in: [internal/DocumentChangeSnapshot.ts:195](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L195)
 
 ## Extends
 
@@ -14,11 +14,11 @@ Defined in: [internal/DocumentChangeSnapshot.ts:193](https://github.com/ericvera
 
 ## Constructors
 
-### new UnmodifiedDocumentSnapshot()
+### Constructor
 
-> **new UnmodifiedDocumentSnapshot**(`doc`, `allDocs`, `normalizedData`?): [`UnmodifiedDocumentSnapshot`](UnmodifiedDocumentSnapshot.md)
+> **new UnmodifiedDocumentSnapshot**(`doc`, `allDocs`, `normalizedData?`): `UnmodifiedDocumentSnapshot`
 
-Defined in: [internal/DocumentChangeSnapshot.ts:103](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L103)
+Defined in: [internal/DocumentChangeSnapshot.ts:105](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L105)
 
 #### Parameters
 
@@ -26,11 +26,11 @@ Defined in: [internal/DocumentChangeSnapshot.ts:103](https://github.com/ericvera
 | ----------------- | ----------------------------------------------------------- |
 | `doc`             | `QueryDocumentSnapshot`                                     |
 | `allDocs`         | `QueryDocumentSnapshot`\<`DocumentData`, `DocumentData`\>[] |
-| `normalizedData`? | `unknown`                                                   |
+| `normalizedData?` | `unknown`                                                   |
 
 #### Returns
 
-[`UnmodifiedDocumentSnapshot`](UnmodifiedDocumentSnapshot.md)
+`UnmodifiedDocumentSnapshot`
 
 #### Inherited from
 
@@ -42,7 +42,7 @@ Defined in: [internal/DocumentChangeSnapshot.ts:103](https://github.com/ericvera
 
 > `protected` `readonly` **doc**: `QueryDocumentSnapshot`
 
-Defined in: [internal/DocumentChangeSnapshot.ts:104](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L104)
+Defined in: [internal/DocumentChangeSnapshot.ts:106](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L106)
 
 #### Inherited from
 
@@ -54,7 +54,7 @@ Defined in: [internal/DocumentChangeSnapshot.ts:104](https://github.com/ericvera
 
 > `protected` `readonly` `optional` **normalizedData**: `unknown`
 
-Defined in: [internal/DocumentChangeSnapshot.ts:106](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L106)
+Defined in: [internal/DocumentChangeSnapshot.ts:108](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L108)
 
 #### Inherited from
 
@@ -66,7 +66,7 @@ Defined in: [internal/DocumentChangeSnapshot.ts:106](https://github.com/ericvera
 
 > `readonly` **normalizedPath**: `string`
 
-Defined in: [internal/DocumentChangeSnapshot.ts:101](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L101)
+Defined in: [internal/DocumentChangeSnapshot.ts:103](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L103)
 
 #### Inherited from
 
@@ -78,7 +78,7 @@ Defined in: [internal/DocumentChangeSnapshot.ts:101](https://github.com/ericvera
 
 > **getDiff**(): `undefined` \| `string`
 
-Defined in: [internal/DocumentChangeSnapshot.ts:199](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L199)
+Defined in: [internal/DocumentChangeSnapshot.ts:201](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/internal/DocumentChangeSnapshot.ts#L201)
 
 Returns a string with the differences between two objects or undefined if
 there are no differences.

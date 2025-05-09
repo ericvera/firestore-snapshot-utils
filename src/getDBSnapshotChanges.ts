@@ -12,6 +12,7 @@ import {
   TimestampDebugOptions,
 } from './internal/extractTimestamps.js'
 import { maskProps } from './internal/maskProps.js'
+import { replaceBuffers } from './internal/replaceBuffers.js'
 import { replaceTimestamps } from './internal/replaceTimestamps.js'
 
 export interface DebugOptions {
@@ -78,14 +79,16 @@ export const getDBSnapshotChanges = (
   const beforeDocsNormalized = beforeDocs
     .sort(ascCompare((a) => a.updateTime.valueOf()))
     .map((doc) => {
-      const normalizedData = replaceTimestamps(doc.data(), sortedTimestamps)
+      let normalizedData = replaceTimestamps(doc.data(), sortedTimestamps)
+      normalizedData = replaceBuffers(normalizedData)
       return { doc, normalizedData }
     })
 
   const afterDocsNormalized = afterDocs
     .sort(ascCompare((a) => a.updateTime.valueOf()))
     .map((doc) => {
-      const normalizedData = replaceTimestamps(doc.data(), sortedTimestamps)
+      let normalizedData = replaceTimestamps(doc.data(), sortedTimestamps)
+      normalizedData = replaceBuffers(normalizedData)
       return { doc, normalizedData }
     })
 

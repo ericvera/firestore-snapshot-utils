@@ -21,3 +21,4 @@
 - [getDBSnapshot](functions/getDBSnapshot.md)
 - [getDBSnapshotChanges](functions/getDBSnapshotChanges.md)
 - [getDiffFromDBSnapshotChanges](functions/getDiffFromDBSnapshotChanges.md)
+- [replaceBuffers](functions/replaceBuffers.md)

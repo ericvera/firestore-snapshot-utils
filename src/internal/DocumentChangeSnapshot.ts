@@ -2,6 +2,7 @@ import type { QueryDocumentSnapshot } from 'firebase-admin/firestore'
 import { diff } from 'jest-diff'
 import { createHash } from 'node:crypto'
 import { extractTimestamps } from './extractTimestamps.js'
+import { replaceBuffers } from './replaceBuffers.js'
 import { replaceTimestamps } from './replaceTimestamps.js'
 
 export interface DBSnapshotChanges {
@@ -66,7 +67,8 @@ const getNormalizedIDForPath = (
   const sortedTimestamps = Array.from(timestampValues).sort()
 
   // Replace timestamps with normalized values
-  const normalizedData = replaceTimestamps(currentData, sortedTimestamps)
+  let normalizedData = replaceTimestamps(currentData, sortedTimestamps)
+  normalizedData = replaceBuffers(normalizedData)
 
   return generateHash(normalizedData)
 }

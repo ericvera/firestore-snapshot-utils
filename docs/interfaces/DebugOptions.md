@@ -6,7 +6,7 @@
 
 # Interface: DebugOptions
 
-Defined in: [getDBSnapshotChanges.ts:17](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/getDBSnapshotChanges.ts#L17)
+Defined in: [getDBSnapshotChanges.ts:18](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/getDBSnapshotChanges.ts#L18)
 
 ## Properties
 
@@ -14,4 +14,4 @@ Defined in: [getDBSnapshotChanges.ts:17](https://github.com/ericvera/firestore-s
 
 > `optional` **logTimestamps**: `boolean`
 
-Defined in: [getDBSnapshotChanges.ts:18](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/getDBSnapshotChanges.ts#L18)
+Defined in: [getDBSnapshotChanges.ts:19](https://github.com/ericvera/firestore-snapshot-utils/blob/main/src/getDBSnapshotChanges.ts#L19)
