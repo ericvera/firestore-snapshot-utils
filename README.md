@@ -1,22 +1,28 @@
-# Firestore Snapshot Utils
-
-**Utils for testing Firestore DB snapshots**
+# 🔥 Firestore Snapshot Utils
 
 [![github license](https://img.shields.io/github/license/ericvera/firestore-snapshot-utils.svg?style=flat-square)](https://github.com/ericvera/firestore-snapshot-utils/blob/master/LICENSE)
 [![npm version](https://img.shields.io/npm/v/firestore-snapshot-utils.svg?style=flat-square)](https://npmjs.org/package/firestore-snapshot-utils)
 
-A lightweight utility library for testing Firestore database snapshots, making it easier to track and verify changes in your Firestore collections.
+Testing Firestore database changes shouldn't be painful. This lightweight utility makes it simple to track and verify Firestore collection changes in your tests.
 
-## Features
+## ✨ Features
 
-- **Snapshot Retrieval**: Get snapshots from single or multiple Firestore queries
-- **Change Detection**: Track document additions, removals, and modifications
-- **Timestamp Normalization**: Consistent representation of Firestore timestamps for reliable comparisons
-- **Property Masking**: Mask sensitive or variable properties (e.g., IDs, timestamps) for deterministic testing
-- **Diff Generation**: Generate human-readable diffs of database changes
-- **TypeScript Support**: Full TypeScript support with strict type checking
+- **Snapshot Retrieval** - Get snapshots from Firestore queries
+- **Change Detection** - Track document additions, removals, and modifications
+- **Timestamp Normalization** - Compare timestamps reliably across test runs
+- **Property Masking** - Ignore sensitive or variable properties in comparisons
+- **Human-readable Diffs** - See exactly what changed in your database
+- **TypeScript Support** - Fully typed API with strict type checking
 
-## Usage
+## 📦 Installation
+
+```bash
+npm install firestore-snapshot-utils
+# or
+yarn add firestore-snapshot-utils
+```
+
+## 🚀 Quick Start
 
 ```typescript
 import {
@@ -25,24 +31,132 @@ import {
   getDiffFromDBSnapshotChanges,
 } from 'firestore-snapshot-utils'
 
-// Get snapshots before changes
-const beforeDocs = await getDBSnapshot(beforeQuery)
+// Before operation
+const beforeDocs = await getDBSnapshot(firestore.collection('users'))
 
-// Perform tests...
+// Run your database operations...
 
-// Get snapshots after changes
-const afterDocs = await getDBSnapshot(afterQuery)
+// After operation
+const afterDocs = await getDBSnapshot(firestore.collection('users'))
 
-// Compare snapshots and get changes
+// Compare snapshots
 const changes = getDBSnapshotChanges(beforeDocs, afterDocs, {
-  // Optional: mask sensitive fields by collection
+  // Mask sensitive fields
   users: ['id', 'createdAt'],
 })
 
-// Generate human-readable diff. This can be used with expect.toMatchInlineSnapshot('<diff content>')
+// Generate readable diff
 console.log(getDiffFromDBSnapshotChanges(changes))
 ```
 
-# API Reference
+## 📚 API Reference
 
-See [docs](docs/README.md)
+### getDBSnapshot
+
+```typescript
+function getDBSnapshot(
+  queries: Query | Query[],
+): Promise<QueryDocumentSnapshot[]>
+```
+
+Gets documents from one or more Firestore queries as a flat array.
+
+**Example:**
+
+```typescript
+// Single collection
+const docs = await getDBSnapshot(firestore.collection('users'))
+
+// Multiple collections
+const docs = await getDBSnapshot([
+  firestore.collection('users'),
+  firestore.collection('products'),
+])
+```
+
+### getDBSnapshotChanges
+
+```typescript
+function getDBSnapshotChanges(
+  beforeDocs: QueryDocumentSnapshot[],
+  afterDocs: QueryDocumentSnapshot[],
+  maskKeys: Record<string, string[]> = {},
+  debugOptions: { logTimestamps?: boolean } = {},
+): DBSnapshotChanges
+```
+
+Compares two document sets and identifies what changed.
+
+**Example:**
+
+```typescript
+const changes = getDBSnapshotChanges(beforeDocs, afterDocs, {
+  users: ['id', 'createdAt'], // Mask these fields
+  products: ['updatedAt'],
+})
+```
+
+### getDiffFromDBSnapshotChanges
+
+```typescript
+function getDiffFromDBSnapshotChanges(changes: DBSnapshotChanges): string
+```
+
+Creates a human-readable diff from database changes.
+
+**Example with Jest:**
+
+```typescript
+expect(getDiffFromDBSnapshotChanges(changes)).toMatchInlineSnapshot()
+```
+
+## 🧪 Testing Example
+
+```typescript
+describe('User profile update', () => {
+  it('should update user data correctly', async () => {
+    // Before state
+    const beforeDocs = await getDBSnapshot(
+      firestore.collection('users').where('id', '==', userId),
+    )
+
+    // Run operation
+    await updateUserProfile(userId, { name: 'New Name' })
+
+    // After state
+    const afterDocs = await getDBSnapshot(
+      firestore.collection('users').where('id', '==', userId),
+    )
+
+    // Compare with masked timestamps
+    const changes = getDBSnapshotChanges(beforeDocs, afterDocs, {
+      users: ['updatedAt'],
+    })
+
+    // Verify against snapshot
+    expect(getDiffFromDBSnapshotChanges(changes)).toMatchInlineSnapshot(`
+      "DB DIFF
+
+      --------------------------------
+       MODIFIED (path: users/[ID])
+      --------------------------------
+      - Expected
+      + Received
+
+        Object {
+      -   "name": "Old Name",
+      +   "name": "New Name",
+        }"
+    `)
+  })
+})
+```
+
+## 📝 Notes
+
+- Timestamps are automatically normalized for consistent comparisons
+- Buffer objects are converted to base64url strings for reliable diff generation
+
+## 📄 License
+
+MIT
