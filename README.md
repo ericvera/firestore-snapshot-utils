@@ -14,6 +14,7 @@ Testing Firestore database changes shouldn't be painful. This lightweight utilit
 - ⏱️ **Timestamp Normalization** - Compare timestamps reliably across test runs
 - 🔒 **Property Masking** - Ignore sensitive or variable properties in comparisons
 - 📊 **Human-readable Diffs** - See exactly what changed in your database
+- 🧪 **Test Data Normalization** - Normalize timestamps and buffers in any data structure for stable test snapshots
 - 📘 **TypeScript Support** - Fully typed API with strict type checking
 
 ## 📦 Installation
@@ -31,6 +32,7 @@ import {
   getDBSnapshot,
   getDBSnapshotChanges,
   getDiffFromDBSnapshotChanges,
+  normalizeData,
 } from 'firestore-snapshot-utils'
 
 // Before operation
@@ -112,6 +114,42 @@ Creates a human-readable diff from database changes.
 expect(getDiffFromDBSnapshotChanges(changes)).toMatchInlineSnapshot()
 ```
 
+### normalizeData
+
+```typescript
+function normalizeData<T = unknown>(
+  data: T,
+  options?: { logTimestamps?: boolean },
+): T
+```
+
+Normalizes Firestore Timestamp and Buffer objects in any data structure for deterministic testing.
+
+**Example:**
+
+```typescript
+import { Timestamp } from 'firebase-admin/firestore'
+
+const testData = {
+  createdAt: new Timestamp(1234567890, 0),
+  user: {
+    lastLogin: new Timestamp(1234567891, 0),
+  },
+}
+
+const normalized = normalizeData(testData)
+
+// Use in tests for stable snapshots
+expect(normalizeData(actualData)).toMatchInlineSnapshot(`
+  Object {
+    "createdAt": "/Timestamp 0000/",
+    "user": Object {
+      "lastLogin": "/Timestamp 0001/",
+    },
+  }
+`)
+```
+
 ## 🧪 Testing Example
 
 ```typescript
@@ -158,6 +196,7 @@ describe('User profile update', () => {
 
 - Timestamps are automatically normalized for consistent comparisons
 - Buffer objects are converted to base64url strings for reliable diff generation
+- The `normalizeData` function can be used standalone to normalize test data with Timestamps and Buffers
 
 ## 🤝 AI Disclosure
 
