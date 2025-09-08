@@ -59,7 +59,7 @@
     "*": "prettier --ignore-unknown --write"
   },
   "dependencies": {
-    "firebase-admin": "^13.4.0",
-    "jest-diff": "^30.0.5"
+    "firebase-admin": "^13.5.0",
+    "jest-diff": "^30.1.2"
   }
 }

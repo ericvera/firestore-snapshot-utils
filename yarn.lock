@@ -326,10 +326,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/get-type@npm:30.0.1":
-  version: 30.0.1
-  resolution: "@jest/get-type@npm:30.0.1"
-  checksum: 10c0/92437ae42d0df57e8acc2d067288151439db4752cde4f5e680c73c8a6e34568bbd8c1c81a2f2f9a637a619c2aac8bc87553fb80e31475b59e2ed789a71e5e540
+"@jest/get-type@npm:30.1.0":
+  version: 30.1.0
+  resolution: "@jest/get-type@npm:30.1.0"
+  checksum: 10c0/3e65fd5015f551c51ec68fca31bbd25b466be0e8ee8075d9610fa1c686ea1e70a942a0effc7b10f4ea9a338c24337e1ad97ff69d3ebacc4681b7e3e80d1b24ac
   languageName: node
   linkType: hard
 
@@ -1444,9 +1444,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"firebase-admin@npm:^13.4.0":
-  version: 13.4.0
-  resolution: "firebase-admin@npm:13.4.0"
+"firebase-admin@npm:^13.5.0":
+  version: 13.5.0
+  resolution: "firebase-admin@npm:13.5.0"
   dependencies:
     "@fastify/busboy": "npm:^3.0.0"
     "@firebase/database-compat": "npm:^2.0.0"
@@ -1455,6 +1455,7 @@ __metadata:
     "@google-cloud/storage": "npm:^7.14.0"
     "@types/node": "npm:^22.8.7"
     farmhash-modern: "npm:^1.1.0"
+    fast-deep-equal: "npm:^3.1.1"
     google-auth-library: "npm:^9.14.2"
     jsonwebtoken: "npm:^9.0.0"
     jwks-rsa: "npm:^3.1.0"
@@ -1465,7 +1466,7 @@ __metadata:
       optional: true
     "@google-cloud/storage":
       optional: true
-  checksum: 10c0/95bb1d8dc99d4dde42494fe7eb8c9b2b0dacf1cb27deef83ba42d9acd671d4903fc0841ebb9bf3640eb7c1f650b7fa578f835395dcf8095b4504d153c2a69e3a
+  checksum: 10c0/141a2c53b86773e9d83a606640aa7f73dced1892a475f33d5e2e6a81f4b9c48a999e96cda7fc9c9160e57211007b32ce0b71ea36cdd7920ea47f69dbcd4ed8f7
   languageName: node
   linkType: hard
 
@@ -1477,9 +1478,9 @@ __metadata:
     "@tsconfig/strictest": "npm:^2.0.5"
     "@types/node": "npm:^24.3.0"
     eslint: "npm:^9.33.0"
-    firebase-admin: "npm:^13.4.0"
+    firebase-admin: "npm:^13.5.0"
     husky: "npm:^9.1.7"
-    jest-diff: "npm:^30.0.5"
+    jest-diff: "npm:^30.1.2"
     lint-staged: "npm:^16.1.5"
     pinst: "npm:^3.0.0"
     prettier: "npm:^3.6.2"
@@ -1796,15 +1797,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-diff@npm:^30.0.5":
-  version: 30.0.5
-  resolution: "jest-diff@npm:30.0.5"
+"jest-diff@npm:^30.1.2":
+  version: 30.1.2
+  resolution: "jest-diff@npm:30.1.2"
   dependencies:
     "@jest/diff-sequences": "npm:30.0.1"
-    "@jest/get-type": "npm:30.0.1"
+    "@jest/get-type": "npm:30.1.0"
     chalk: "npm:^4.1.2"
     pretty-format: "npm:30.0.5"
-  checksum: 10c0/b218ced37b7676f578ea866762f04caa74901bdcf3f593872aa9a4991a586302651a1d16bb0386772adacc7580a452ec621359af75d733c0b50ea947fe1881d3
+  checksum: 10c0/5baba5c54d044faf77540d2b97f947ce2a735c529bdca23ccd25669085ba3912eef2a8f66f4d765e8e416b1e10b95cb1dded0ebc1633efdbef37706b4e767ecb
   languageName: node
   linkType: hard
 
