@@ -16,15 +16,18 @@ export interface NormalizeDataOptions {
  * Normalizes Firestore Timestamp objects and Buffer objects in a data structure
  * by replacing them with standardized string representations.
  *
- * This is useful for creating deterministic snapshots in tests where the actual
- * timestamp/buffer values may vary but their relative ordering or content is what matters.
+ * This is useful for creating deterministic snapshots in tests where the
+ * actual
+ * timestamp/buffer values may vary but their relative ordering or content
+ * is what matters.
  *
  * - Timestamps are replaced with strings in the format `/Timestamp XXXX/` where
  *   XXXX is a zero-padded index representing the timestamp's position when all
  *   timestamps are sorted chronologically.
  * - Buffer objects are normalized to `/Buffer <base64url>/` format.
  *
- * @param data - The data structure containing Timestamp and Buffer objects to normalize
+ * @param data - The data structure containing Timestamp and Buffer objects
+ *   to normalize
  * @param options - Optional configuration for the normalization process
  * @returns A new data structure with all Timestamps and Buffers replaced by
  * normalized strings.

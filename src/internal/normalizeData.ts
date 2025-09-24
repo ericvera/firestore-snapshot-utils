@@ -49,7 +49,8 @@ export const normalizeData = (
     return value.map((item) => normalizeData(item, sortedTimestamps))
   }
 
-  // Handle objects (but not null) - create a new object to avoid modifying the input
+  // Handle objects (but not null) - create a new object to avoid modifying
+  // the input
   if (typeof value === 'object' && value !== null) {
     const result: Record<string, unknown> = {}
 

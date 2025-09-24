@@ -9,8 +9,10 @@ export interface TimestampDebugOptions {
  * Extracts all unique timestamp values from an object into a Set.
  * The values are stored as strings (from timestamp.valueOf()) for easy sorting.
  *
- * This function is idempotent - calling it multiple times with the same input
- * will always produce the same output, and it doesn't modify any input parameters.
+ * This function is idempotent - calling it multiple times with the same
+ * input
+ * will always produce the same output, and it doesn't modify any input
+ * parameters.
  *
  * @param value - The value to extract timestamps from
  * @param debugOptions - Options for debugging timestamp extraction
@@ -23,7 +25,7 @@ export const extractTimestamps = (
   const result = new Set<string>()
 
   // Internal recursive function that uses the result Set
-  const extract = (val: unknown, currentPath: string = ''): void => {
+  const extract = (val: unknown, currentPath = ''): void => {
     // Handle Timestamp objects
     if (val instanceof Timestamp) {
       const timeValue = val.valueOf()

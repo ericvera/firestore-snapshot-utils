@@ -115,7 +115,9 @@ export const getDBSnapshotChanges = (
         ({ doc }) => doc.ref.path === afterDoc.ref.path,
       )
 
-      if (!beforeDocData) return
+      if (!beforeDocData) {
+        return
+      }
 
       const { doc: beforeDoc, normalizedData: beforeNormalizedData } =
         beforeDocData
