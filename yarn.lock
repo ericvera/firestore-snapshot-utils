@@ -1461,7 +1461,7 @@ __metadata:
     eslint: "npm:^9.36.0"
     firebase-admin: "npm:^13.5.0"
     husky: "npm:^9.1.7"
-    jest-diff: "npm:^30.1.2"
+    jest-diff: "npm:^30.2.0"
     lint-staged: "npm:^16.2.3"
     pinst: "npm:^3.0.0"
     prettier: "npm:^3.6.2"
@@ -1778,15 +1778,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-diff@npm:^30.1.2":
-  version: 30.1.2
-  resolution: "jest-diff@npm:30.1.2"
+"jest-diff@npm:^30.2.0":
+  version: 30.2.0
+  resolution: "jest-diff@npm:30.2.0"
   dependencies:
     "@jest/diff-sequences": "npm:30.0.1"
     "@jest/get-type": "npm:30.1.0"
     chalk: "npm:^4.1.2"
-    pretty-format: "npm:30.0.5"
-  checksum: 10c0/5baba5c54d044faf77540d2b97f947ce2a735c529bdca23ccd25669085ba3912eef2a8f66f4d765e8e416b1e10b95cb1dded0ebc1633efdbef37706b4e767ecb
+    pretty-format: "npm:30.2.0"
+  checksum: 10c0/5fac2cd89a10b282c5a68fc6206a95dfff9955ed0b758d24ffb0edcb20fb2f98e1fa5045c5c4205d952712ea864c6a086654f80cdd500cce054a2f5daf5b4419
   languageName: node
   linkType: hard
 
@@ -2317,14 +2317,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pretty-format@npm:30.0.5":
-  version: 30.0.5
-  resolution: "pretty-format@npm:30.0.5"
+"pretty-format@npm:30.2.0":
+  version: 30.2.0
+  resolution: "pretty-format@npm:30.2.0"
   dependencies:
     "@jest/schemas": "npm:30.0.5"
     ansi-styles: "npm:^5.2.0"
     react-is: "npm:^18.3.1"
-  checksum: 10c0/9f6cf1af5c3169093866c80adbfdad32f69c692b62f24ba3ca8cdec8519336123323f896396f9fa40346a41b197c5f6be15aec4d8620819f12496afaaca93f81
+  checksum: 10c0/8fdacfd281aa98124e5df80b2c17223fdcb84433876422b54863a6849381b3059eb42b9806d92d2853826bcb966bcb98d499bea5b1e912d869a3c3107fd38d35
   languageName: node
   linkType: hard
 
