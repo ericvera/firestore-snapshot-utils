@@ -1426,9 +1426,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"firebase-admin@npm:^13.5.0":
-  version: 13.5.0
-  resolution: "firebase-admin@npm:13.5.0"
+"firebase-admin@npm:^13.6.0":
+  version: 13.6.0
+  resolution: "firebase-admin@npm:13.6.0"
   dependencies:
     "@fastify/busboy": "npm:^3.0.0"
     "@firebase/database-compat": "npm:^2.0.0"
@@ -1448,7 +1448,7 @@ __metadata:
       optional: true
     "@google-cloud/storage":
       optional: true
-  checksum: 10c0/141a2c53b86773e9d83a606640aa7f73dced1892a475f33d5e2e6a81f4b9c48a999e96cda7fc9c9160e57211007b32ce0b71ea36cdd7920ea47f69dbcd4ed8f7
+  checksum: 10c0/63394b43ae7dd467935b60e83d68a9bf6bfc120ebc2521c78b607b672d067ee426226ac6e6df006c39aeb53171314e1c37faae004147b2ebfcb16107939ca1ed
   languageName: node
   linkType: hard
 
@@ -1460,7 +1460,7 @@ __metadata:
     "@tsconfig/strictest": "npm:^2.0.6"
     "@types/node": "npm:^24.9.1"
     eslint: "npm:^9.38.0"
-    firebase-admin: "npm:^13.5.0"
+    firebase-admin: "npm:^13.6.0"
     husky: "npm:^9.1.7"
     jest-diff: "npm:^30.2.0"
     lint-staged: "npm:^16.2.6"
