@@ -23,16 +23,16 @@
   },
   "packageManager": "yarn@4.10.3",
   "devDependencies": {
-    "@eslint/js": "^9.38.0",
-    "@tsconfig/strictest": "^2.0.6",
-    "@types/node": "^24.9.1",
-    "eslint": "^9.38.0",
+    "@eslint/js": "^9.39.1",
+    "@tsconfig/strictest": "^2.0.8",
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.6",
+    "lint-staged": "^16.2.7",
     "pinst": "^3.0.0",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.2"
+    "typescript-eslint": "^8.47.0"
   },
   "prettier": {
     "tabWidth": 2,
