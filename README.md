@@ -20,10 +20,12 @@ Testing Firestore database changes shouldn't be painful. This lightweight utilit
 ## 📦 Installation
 
 ```bash
-npm install firestore-snapshot-utils
+npm install firestore-snapshot-utils firebase-admin
 # or
-yarn add firestore-snapshot-utils
+yarn add firestore-snapshot-utils firebase-admin
 ```
+
+> **Note:** `firebase-admin` is a peer dependency (^13.5.0). Installing it alongside this package ensures a single shared install — the `Timestamp` identity checks rely on it.
 
 ## 🚀 Quick Start
 

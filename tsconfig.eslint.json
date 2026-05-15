@@ -2,5 +2,17 @@
   "$schema": "https://json.schemastore.org/tsconfig",
 
   "extends": ["@tsconfig/strictest/tsconfig.json"],
+  "compilerOptions": {
+    // Required so `.mjs` is treated as a valid input. Without this, the
+    // strictest preset's `allowJs: false` leaves the project with zero
+    // inputs and TypeScript 6 reports TS18003.
+    "allowJs": true,
+    // Match the main project's module/target so Node's ImportMeta augmentation
+    // (import.meta.dirname, etc.) resolves correctly when linting this file.
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ESNext",
+    "types": ["node"]
+  },
   "include": ["eslint.config.mjs"]
 }
