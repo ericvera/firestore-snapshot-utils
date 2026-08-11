@@ -12,7 +12,7 @@ Testing Firestore database changes shouldn't be painful. This lightweight utilit
 - 🔍 **Snapshot Retrieval** - Get snapshots from Firestore queries
 - 🔄 **Change Detection** - Track document additions, removals, and modifications
 - ⏱️ **Timestamp Normalization** - Compare timestamps reliably across test runs
-- 🔒 **Property Masking** - Ignore sensitive or variable properties in comparisons
+- 🔒 **Property Masking** - Replace sensitive or variable properties with their type token
 - 📊 **Human-readable Diffs** - See exactly what changed in your database
 - 🧪 **Test Data Normalization** - Normalize timestamps and buffers in any data structure for stable test snapshots
 - 📘 **TypeScript Support** - Fully typed API with strict type checking
@@ -101,6 +101,22 @@ const changes = getDBSnapshotChanges(beforeDocs, afterDocs, {
   products: ['updatedAt'],
 })
 ```
+
+**Masked values:** every present value at a masked key is replaced by a token for
+its type, so masked output stays stable regardless of the underlying value:
+
+| Value                | Masked as             |
+| -------------------- | --------------------- |
+| `string`             | `/String/`            |
+| `number`             | `/Number/`            |
+| `boolean`            | `/Boolean/`           |
+| `null`               | `/Null/`              |
+| array                | `/Array/`             |
+| map (object)         | `/Map/`               |
+| absent (`undefined`) | key is left untouched |
+
+> **Note:** Masking runs after normalization, so a masked `Timestamp` (already
+> normalized to `/Timestamp NNNN/`) is reported as `/String/`.
 
 ### getDiffFromDBSnapshotChanges
 

@@ -1,3 +1,24 @@
+const getTypeToken = (value: unknown): string => {
+  if (value === null) {
+    return '/Null/'
+  }
+
+  if (Array.isArray(value)) {
+    return '/Array/'
+  }
+
+  switch (typeof value) {
+    case 'string':
+      return '/String/'
+    case 'number':
+      return '/Number/'
+    case 'boolean':
+      return '/Boolean/'
+    default:
+      return '/Map/'
+  }
+}
+
 // NOTE: Currently only works with props that exist in the top level of the
 // object
 export const maskProps = <T>(
@@ -15,9 +36,13 @@ export const maskProps = <T>(
     const obj = a as Record<string, unknown>
 
     for (const key of keys) {
-      if (typeof obj[key] === 'string') {
-        obj[key] = obj[key].replace(/./g, '•')
+      const value = obj[key]
+
+      if (value === undefined) {
+        continue
       }
+
+      obj[key] = getTypeToken(value)
     }
   }
 
