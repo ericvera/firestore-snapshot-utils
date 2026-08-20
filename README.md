@@ -3,6 +3,69 @@
 [![github license](https://img.shields.io/github/license/ericvera/firestore-snapshot-utils.svg?style=flat-square)](https://github.com/ericvera/firestore-snapshot-utils/blob/master/LICENSE)
 [![npm version](https://img.shields.io/npm/v/firestore-snapshot-utils.svg?style=flat-square)](https://npmjs.org/package/firestore-snapshot-utils)
 
+> ## ⚠️ Deprecated — moved to `firebase-kit-admin`
+>
+> **This package is no longer maintained.** Everything it does now lives in
+> [`firebase-kit-admin`](https://www.npmjs.com/package/firebase-kit-admin), under
+> its `firebase-kit-admin/testing` entry point, alongside the rest of the Firebase
+> Admin testing helpers.
+>
+> No further releases are planned. See
+> [Migrating to firebase-kit-admin](#-migrating-to-firebase-kit-admin) below.
+
+## 🚚 Migrating to firebase-kit-admin
+
+```bash
+npm uninstall firestore-snapshot-utils
+npm install --save-dev firebase-kit-admin
+```
+
+```diff
+- import {
+-   getDBSnapshot,
+-   getDBSnapshotChanges,
+-   getDiffFromDBSnapshotChanges,
+-   normalizeData,
+- } from 'firestore-snapshot-utils'
++ import {
++   getDBSnapshot,
++   getDBChanges,
++   getDBChangesDiff,
++   normalizeData,
++ } from 'firebase-kit-admin/testing'
+```
+
+**API mapping**
+
+| `firestore-snapshot-utils`     | `firebase-kit-admin/testing` |
+| ------------------------------ | ---------------------------- |
+| `getDBSnapshot`                | `getDBSnapshot`              |
+| `getDBSnapshotChanges`         | `getDBChanges`               |
+| `getDiffFromDBSnapshotChanges` | `getDBChangesDiff`           |
+| `normalizeData`                | `normalizeData`              |
+| `DBSnapshotChanges` (type)     | `DBSnapshotChanges` (type)   |
+
+**Behavior differences**
+
+- `getDBChanges` drops the fourth `debugOptions` argument. Timestamp logging is
+  still available through `normalizeData(data, { logTimestamps: true })`.
+- `getDBChanges` types its mask keys as
+  `Partial<Record<TCollection, string[]>>`, so passing your own collection-name
+  union catches a misspelled collection at compile time.
+- `getDBSnapshot` additionally accepts refs exposing `testAllQuery()`, not just
+  a bare `Query`. Existing `Query` and `Query[]` calls are unchanged.
+- `normalizeData` is unchanged.
+
+**Requirements**
+
+`firebase-kit-admin` needs Node >= 24 and `firebase-admin` ^14.2.0 (this package
+peers on ^13.5.0), so plan the `firebase-admin` major upgrade alongside the move.
+
+---
+
+_The rest of this README documents the deprecated package and is kept for
+reference only._
+
 **A lightweight utility for testing Firestore database snapshots with precision.**
 
 Testing Firestore database changes shouldn't be painful. This lightweight utility makes it simple to track and verify Firestore collection changes in your tests.
